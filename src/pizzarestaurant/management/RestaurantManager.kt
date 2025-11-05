@@ -6,7 +6,7 @@ import pizzarestaurant.utils.TimeUtils
 
 class RestaurantManager {
     private val inventory = Inventory()
-    private val pizzaMaker = PizzaMaker(inventory)
+    private val pizzaMaker = PIzzaMaker(inventory)
     private val delivery = Delivery(pizzaMaker)
     private val tables = List(6) { Table(it + 1) }
 

@@ -1,7 +1,7 @@
 package pizzarestaurant.model
 
 
-import pizzarestaurant.management.PizzaMaker
+import pizzarestaurant.management.PIzzaMaker
 
 
 class Table(private val id: Int) {
@@ -14,7 +14,7 @@ class Table(private val id: Int) {
     }
 
 
-    fun takeOrder(pizzaMaker: PizzaMaker) {
+    fun takeOrder(pizzaMaker: PIzzaMaker) {
         val pizzasOrdered = (1..customers).random()
         println("[MESA $id] Pide $pizzasOrdered pizzas.")
         repeat(pizzasOrdered) {
