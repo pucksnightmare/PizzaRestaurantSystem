@@ -35,6 +35,36 @@ class Inventory {
         println("=========================\n")
     }
 
+    fun useIngredients(): Boolean {
+        // Ingredientes necesarios por pizza (aleatorio, pero dentro de rangos razonables)
+        val required = mapOf(
+            "Masa" to 1,
+            "Salsa de Tomate" to (1..2).random(),
+            "Queso" to (1..3).random(),
+            "Pepperoni" to (0..2).random()
+        )
 
 
+        // Verificar disponibilidad
+        for ((ingredient, needed) in required) {
+            val available = currentStock[ingredient] ?: 0
+            if (available < needed) {
+                println("[INVENTARIO] No hay suficiente $ingredient. Restaurante debe cerrar.")
+                return false
+            }
+        }
+
+
+        // Descontar ingredientes
+        for ((ingredient, needed) in required) {
+            currentStock[ingredient] = (currentStock[ingredient] ?: 0) - needed
+        }
+
+
+        return true
+    }
+
+    fun hasIngredients(): Boolean {
+        return currentStock.all { (_, amount) -> amount > 0 }
+    }
 }
