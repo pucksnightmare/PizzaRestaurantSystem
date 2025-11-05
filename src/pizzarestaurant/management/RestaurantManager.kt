@@ -34,5 +34,53 @@ class RestaurantManager {
         var currentHour = 14
         val closingHour = 24
 
+        while (currentHour < closingHour && pizzaMaker.pizzasMade < 30 && inventory.hasIngredients()) {
+            println("\nHora actual: ${formatHour(currentHour)}")
+
+
+            val events = (1..3).random() // número de eventos por hora
+
+
+            repeat(events) {
+                val action = (1..2).random()
+                if (action == 1) {
+                    val table = tables.random()
+                    table.seatCustomers((1..4).random())
+                    table.takeOrder(pizzaMaker)
+                    table.clearTable()
+                } else {
+                    delivery.processOrder()
+                }
+
+
+                if (!inventory.hasIngredients() || pizzaMaker.pizzasMade >= 30) {
+                    println("\nEl restaurante debe cerrar antes de tiempo.")
+                    break
+                }
+            }
+
+
+            inventory.showInventory()
+            TimeUtils.sleepSimulated(0.1)
+            currentHour++
+        }
+
+
+        println("\nCierre del restaurante.")
+        println("Hora de cierre: ${formatHour(currentHour)}")
+        println("Total de pizzas vendidas: ${pizzaMaker.pizzasMade}")
     }
+
+
+    private fun formatHour(hour: Int): String {
+        return when {
+            hour < 12 -> "${hour}am"
+            hour == 12 -> "12pm"
+            hour < 24 -> "${hour - 12}pm"
+            else -> "12am"
+        }
+    }
+
 }
+
+
